@@ -476,6 +476,7 @@ connect(State, _Meta, ConnectOpts) ->
     Args = #mqtt{action={idle}},
     {ok, SessionPid} = gen_emqtt:start_link(?MODULE, Args, [{info_fun, {fun stats/2, maps:new()}}|ConnectOpts]),
     lager:warning("The SessionID ~p <<", [SessionPid]),
+    lager:warning("The ALIVE ~p <<", [is_process_alive(Pid)]),
     {nil, State#state{mqtt_fsm=SessionPid, client=ClientId}}.
 
 disconnect(#state{mqtt_fsm=SessionPid} = State, _Meta) ->
