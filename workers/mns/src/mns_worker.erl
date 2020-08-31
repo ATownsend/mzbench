@@ -401,7 +401,7 @@ mq_cluster_publish_history(#state{network_mac = MacPrefix, string_mac = StringMa
 on_connect(#state{mqtt_con_status = Mqtt_connection_status} = State) ->
     mzb_metrics:notify({"mqtt.connection.current_total", counter}, 1),
     Mqtt_connection_status = "T",
-    {ok, State}.
+    {ok, State#state{mqtt_con_status = Mqtt_connection_status}}.
 
 on_connect_error(_Reason, State) ->
     mzb_metrics:notify({"mqtt.connection.connect.errors", counter}, 1),
@@ -412,7 +412,7 @@ on_disconnect(#state{mqtt_con_status = Mqtt_connection_status} = State) ->
     mzb_metrics:notify({"mqtt.connection.cluster_total", counter}, -1),
     mzb_metrics:notify({"mqtt.connection.reconnects", counter}, 1),
     Mqtt_connection_status = "F",
-    {ok, State}.
+    {ok, State#state{mqtt_con_status = Mqtt_connection_status}}.
 
 on_subscribe(Topics, State) ->
     case Topics of
