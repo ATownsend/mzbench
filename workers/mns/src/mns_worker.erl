@@ -355,6 +355,7 @@ mq_cluster_publish_guardian(#state{network_mac = MacPrefix, string_mac = StringM
 
 -spec mq_cluster_publish_heartbeat(state(), meta()) -> {nil, state()}.
 mq_cluster_publish_heartbeat(#state{network_mac = MacPrefix, string_mac = StringMacPrefix, guardian_id = GuardianId, network_id = NetworkID, mq_type = MQType } = State, Meta) ->
+    lager:warning("Connection State: ~p", [State]),
     SysId = re:replace(StringMacPrefix,"^.{6}", "", [{return, list}]),
     {BigTime, MediumTime, SmallTime} = os:timestamp(),
     Timestamp = io_lib:format("~4..0B~6..0B", [BigTime, MediumTime ]),
