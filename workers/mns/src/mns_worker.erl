@@ -358,8 +358,8 @@ mq_cluster_publish_guardian(#state{network_mac = MacPrefix, string_mac = StringM
     {nil,State}.
 
 -spec mq_cluster_publish_heartbeat(state(), meta()) -> {nil, state()}.
-mq_cluster_publish_heartbeat(#state{network_mac = MacPrefix, string_mac = StringMacPrefix, guardian_id = GuardianId, network_id = NetworkID, mq_type = MQType } = State, Meta) ->
-    lager:warning("Connection State: ~p", [State]),
+mq_cluster_publish_heartbeat(#state{mqtt_fsm = MQTT_Connection, network_mac = MacPrefix, string_mac = StringMacPrefix, guardian_id = GuardianId, network_id = NetworkID, mq_type = MQType } = State, Meta) ->
+    lager:warning("The ALIVE ~p ~p <<", [MQTT_Connection,is_process_alive(MQTT_Connection)]),
     SysId = re:replace(StringMacPrefix,"^.{6}", "", [{return, list}]),
     {BigTime, MediumTime, SmallTime} = os:timestamp(),
     Timestamp = io_lib:format("~4..0B~6..0B", [BigTime, MediumTime ]),
@@ -476,7 +476,6 @@ connect(State, _Meta, ConnectOpts) ->
     Args = #mqtt{action={idle}},
     {ok, SessionPid} = gen_emqtt:start_link(?MODULE, Args, [{info_fun, {fun stats/2, maps:new()}}|ConnectOpts]),
     lager:warning("The SessionID ~p <<", [SessionPid]),
-    lager:warning("The ALIVE ~p <<", [is_process_alive(SessionPid)]),
     {nil, State#state{mqtt_fsm=SessionPid, client=ClientId}}.
 
 disconnect(#state{mqtt_fsm=SessionPid} = State, _Meta) ->
