@@ -460,7 +460,7 @@ terminate(_Reason, _State) ->
     mzb_metrics:notify({"mqtt.connection.current_total", counter}, -1),
     mzb_metrics:notify({"mqtt.connection.reconnects", counter}, 1),
     lager:warning("Reconnect Info ~p ", [_State] ),
-    mq_cluster_connect(_State, ""),
+    %mq_cluster_connect(_State, ""),
     ok.
 
 code_change(_OldVsn, State, _Extra) ->
