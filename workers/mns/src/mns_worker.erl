@@ -401,6 +401,7 @@ mq_cluster_publish_history(#state{network_mac = MacPrefix, string_mac = StringMa
 on_connect(State) ->
     mzb_metrics:notify({"mqtt.connection.current_total", counter}, 1),
     Mqtt_connection_status = "T",
+    lager:warning("Connection supa State: ~p", [State]),
     {ok, State#state{mqtt_con_status = Mqtt_connection_status}}.
 
 on_connect_error(_Reason, State) ->
