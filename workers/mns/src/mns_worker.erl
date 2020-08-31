@@ -398,7 +398,7 @@ mq_cluster_publish_history(#state{network_mac = MacPrefix, string_mac = StringMa
 %% ------------------------------------------------
 %% Gen_MQTT Callbacks (partly un-used)
 %% ------------------------------------------------
-on_connect(#state{mqtt_con_status = Mqtt_connection_status} = State) ->
+on_connect(State) ->
     mzb_metrics:notify({"mqtt.connection.current_total", counter}, 1),
     Mqtt_connection_status = "T",
     {ok, State#state{mqtt_con_status = Mqtt_connection_status}}.
