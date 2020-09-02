@@ -328,7 +328,7 @@ mq_cluster_connect(#state{network_mac = FinalMacPrefix, network_id = NetworkId, 
     MqPid = element(2,NewState),
     lager:warning("MQTTPID: ~p", [MqPid]),
     mzb_metrics:notify({"mqtt.connection.cluster_total", counter}, 1),
-    register("Mqtt", MqPid),
+    register(mqtt, MqPid),
     %#state.mqtt_fsm=SessionPid, client=ClientId}}
     {nil, NewState}.
 
