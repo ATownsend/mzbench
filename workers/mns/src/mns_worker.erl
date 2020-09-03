@@ -414,7 +414,7 @@ on_disconnect(State) ->
     mzb_metrics:notify({"mqtt.connection.cluster_total", counter}, -1),
     mzb_metrics:notify({"mqtt.connection.reconnects", counter}, 1),
     lager:warning("The PID Stuff  ~p ~p<<", [State, self()]),
-    exit("Disconnect"),
+    
     {ok, State}.
 
 on_subscribe(Topics, State) ->
