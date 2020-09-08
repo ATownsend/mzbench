@@ -3,9 +3,10 @@
 PKG_NAME = mns_py
 
 all:
-	pip install paho-mqtt
+
 
 generate_tgz:
+	pip install paho-mqtt
 	mkdir -p pkgroot/${PKG_NAME}
 	cp src/*.py pkgroot/${PKG_NAME}/
 	
