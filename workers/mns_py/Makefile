@@ -1,6 +1,6 @@
 .PHONY: all compile get-deps generate_tgz clean
 
-PKG_NAME = mns-py
+PKG_NAME = mns_py
 
 all:
 
