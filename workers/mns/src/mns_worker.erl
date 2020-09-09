@@ -312,7 +312,7 @@ record_response(Prefix, Response) ->
 
 -spec mq_cluster_connect(state(), meta() ) -> {nil, state()}.
 mq_cluster_connect(#state{network_mac = FinalMacPrefix, network_id = NetworkId, guardian_id = GuardianId, mq_server = MQServer, mq_password = MQPassword } = State, Meta)->
-    lager:warning("MetaData: ~p", [Meta]),
+    %lager:warning("MetaData: ~p", [Meta]),
     {WorkerId, State} = worker_id(State, Meta),
     {ClientId, State} = fixed_client_id(State, Meta, "pool1", WorkerId),
     {Something, NewState} = connect(State, Meta, [{host,  MQServer},
@@ -326,9 +326,9 @@ mq_cluster_connect(#state{network_mac = FinalMacPrefix, network_id = NetworkId, 
             {reconnect_timeout,10}
             ]),
     MqPid = element(2,NewState),
-    lager:warning("MQTTPID: ~p", [MqPid]),
+    %lager:warning("MQTTPID: ~p", [MqPid]),
     mzb_metrics:notify({"mqtt.connection.cluster_total", counter}, 1),
-    register(list_to_atom( string:concat("mqtt", NetworkId)), MqPid),
+    %register(list_to_atom( string:concat("mqtt", NetworkId)), MqPid),
     %#state.mqtt_fsm=SessionPid, client=ClientId}}
     {nil, NewState}.
 
@@ -360,7 +360,7 @@ mq_cluster_publish_guardian(#state{network_mac = MacPrefix, string_mac = StringM
 
 -spec mq_cluster_publish_heartbeat(state(), meta()) -> {nil, state()}.
 mq_cluster_publish_heartbeat(#state{mqtt_fsm = MQTT_Connection, network_mac = MacPrefix, string_mac = StringMacPrefix, guardian_id = GuardianId, network_id = NetworkId, mq_type = MQType } = State, Meta) ->
-    lager:warning("The ALIVE ~p - ~p - ~p <<", [whereis(list_to_atom( string:concat("mqtt", NetworkId))),MQTT_Connection,is_process_alive(MQTT_Connection)]),
+    %lager:warning("The ALIVE ~p - ~p - ~p <<", [whereis(list_to_atom( string:concat("mqtt", NetworkId))),MQTT_Connection,is_process_alive(MQTT_Connection)]),
     SysId = re:replace(StringMacPrefix,"^.{6}", "", [{return, list}]),
     {BigTime, MediumTime, SmallTime} = os:timestamp(),
     Timestamp = io_lib:format("~4..0B~6..0B", [BigTime, MediumTime ]),
@@ -413,7 +413,7 @@ on_disconnect(State) ->
     mzb_metrics:notify({"mqtt.connection.current_total", counter}, -1),
     mzb_metrics:notify({"mqtt.connection.cluster_total", counter}, -1),
     mzb_metrics:notify({"mqtt.connection.reconnects", counter}, 1),
-    lager:warning("The PID Stuff  ~p ~p<<", [State, self()]),
+    %lager:warning("The PID Stuff  ~p ~p<<", [State, self()]),
     
     {ok, State}.
 
