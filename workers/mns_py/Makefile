@@ -6,7 +6,7 @@ all:
 
 
 generate_tgz:
-	pip install paho-mqtt
+	sudo pip install paho-mqtt
 	mkdir -p pkgroot/${PKG_NAME}
 	cp src/*.py pkgroot/${PKG_NAME}/
 	
