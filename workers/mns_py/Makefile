@@ -4,7 +4,6 @@ PKG_NAME = mns_py
 
 all:
 
-
 generate_tgz:
 	mkdir -p pkgroot/${PKG_NAME}
 	cp src/*.py pkgroot/${PKG_NAME}/
