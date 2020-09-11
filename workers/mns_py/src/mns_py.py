@@ -1,6 +1,6 @@
 import random
 import mzbench
-import paho.mqtt.client as mqtt
+import json
 
 def initial_state():
     pass
