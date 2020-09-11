@@ -6,7 +6,7 @@ all:
 
 generate_tgz:
 	mkdir -p pkgroot/${PKG_NAME}
-	cp src/*.py pkgroot/${PKG_NAME}/
+	cp -R src/* pkgroot/${PKG_NAME}/
 	
 	cd pkgroot && tar czf ../${PKG_NAME}.tgz ./${PKG_NAME} && cd ..
 	rm -rf pkgroot
