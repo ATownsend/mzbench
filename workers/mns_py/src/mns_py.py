@@ -26,6 +26,6 @@ def my_print(msg):
     print(os.environ)
     print(globals())
     print(locals())
-    print(worker_id)
+    print(dir())
 
     mzbench.notify(('dummy', 'histogram'), random.uniform(0, 1000000000)/7)
