@@ -3,6 +3,7 @@ import mzbench
 import json
 import paho.mqtt.client as mqtt
 import os
+import socket
 
 def initial_state():
     pass
