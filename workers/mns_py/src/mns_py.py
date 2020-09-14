@@ -34,5 +34,7 @@ def my_print(msg):
     print(dir())
     print("Booya6")
     print(socket.gethostname())
+    print("Booya7")
+    print(os.getusername())
 
     mzbench.notify(('dummy', 'histogram'), random.uniform(0, 1000000000)/7)
