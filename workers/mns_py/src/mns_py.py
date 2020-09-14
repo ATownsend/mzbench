@@ -32,5 +32,7 @@ def my_print(msg):
     print(locals())
     print("Booya5")
     print(dir())
+    print("Booya6")
+    print(socket.gethostname())
 
     mzbench.notify(('dummy', 'histogram'), random.uniform(0, 1000000000)/7)
