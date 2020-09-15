@@ -14,6 +14,8 @@ def notify(metric, value):
 def get_metric_value(name):
     return _call(mzb_atom('mzb_metrics'), mzb_atom('get_value'), [name])
 
+def get_worker_id():
+    return _call(mzb_atom('proplists'), mzb_atom('get_value'), ["worker_id"])
 
 def _call(module, function, args):
     _mzbench_pipe.write("C {0}.\n".format(_encode_term((module, function, args))))

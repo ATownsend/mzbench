@@ -24,7 +24,7 @@ def my_print(msg):
     mzbench.notify(('print_2', 'counter'), 2)
 
     print("Booya0")
-    print(os.environ['MZB_WORKER_ID'])
+    print(mzbench.get_worker_id())
     print("Booya1")
     print(msg)
     print("Booya2")
