@@ -23,12 +23,13 @@ def metrics():
     ]
 
 
-def my_print(msg):
+def my_print(server):
     mzbench.notify(('print', 'counter'), 1)
     mzbench.notify(('print_2', 'counter'), 2)
 
-    random_number = random.randint(0, 999999999)*256
-    mac=mac_address(random_number)
+    mac=mac_address(random.randint(0, 999999999)*256)
+    time_stamp = time.time() - 31,536,000
+    network = core_network_mock( mac=mac, time=time_stamp, server=server, ssl=True)
     print("Booya0")
     print(random_number)
     print(mac.address())
