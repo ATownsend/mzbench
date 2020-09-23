@@ -27,8 +27,9 @@ def my_print(msg):
     mzbench.notify(('print', 'counter'), 1)
     mzbench.notify(('print_2', 'counter'), 2)
 
-    mac=mac_address.address(random.randint(0, 999999999))
+    mac=mac_address(random.randint(0, 999999999))
     print("Booya0")
+    print(mac.address())
     #print(mzbench.get_worker_id())
     #print("Booya1")
     #print(msg)
