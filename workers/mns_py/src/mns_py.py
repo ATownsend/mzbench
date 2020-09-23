@@ -6,7 +6,7 @@ import paho.mqtt.client as mqtt
 import os
 import socket
 import mns.core_network_mock
-import mns.mac_address as mac_address
+from mns.mac_address import mac_address
 import random
 
 def initial_state():
