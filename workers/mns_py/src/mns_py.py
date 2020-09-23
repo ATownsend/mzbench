@@ -30,6 +30,7 @@ def my_print(msg):
     random_number = random.randint(0, 999999999)*1000
     mac=mac_address(random_number)
     print("Booya0")
+    print(random_number)
     print(mac.address())
     #print(mzbench.get_worker_id())
     #print("Booya1")
