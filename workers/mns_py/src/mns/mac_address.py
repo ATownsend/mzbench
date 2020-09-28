@@ -8,7 +8,7 @@ class mac_address:
     def setNewMac(self, header = 0, start = 1):
         header = int(str(header), 16)
         start = int(str(start), 16)
-        self.number = (header * (16 ** 10)) + (start * (16 ** 6))
+        self.number = int((header * (16 ** 10)) + (start * (16 ** 6)))
     
     def setMac(self, mac):
         if isinstance(mac, str):
