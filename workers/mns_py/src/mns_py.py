@@ -8,6 +8,7 @@ import socket
 from mns.core_network_mock import core_network_mock
 from mns.mac_address import mac_address
 import random
+import math
 
 def initial_state():
     pass
