@@ -26,7 +26,7 @@ class mac_address:
         return self.convert_int_to_mac(self.number)
 
     def number(self):
-        return self.number
+        return int(self.number)
 
     def increment(self, step = 1):
         self.number += step
