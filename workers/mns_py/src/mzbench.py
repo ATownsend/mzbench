@@ -103,4 +103,4 @@ def _encode_string_for_erlang(string):
 if 'MZ_PYTHON_WORKER_FIFO_NAME' not in os.environ:
     sys.exit("MZ_PYTHON_WORKER_FIFO_NAME environment variable must be defined!")
 
-_mzbench_pipe = open(os.environ['MZ_PYTHON_WORKER_FIFO_NAME'], 'r+', 0)
+_mzbench_pipe = open(os.environ['MZ_PYTHON_WORKER_FIFO_NAME'], 'r+', 1)
