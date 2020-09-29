@@ -27,7 +27,8 @@ def _instruction_end(result):
     _mzbench_pipe.write("T {0}.\n".format(_encode_term(result)))
 
 
-def _instruction_failed((t, o, st)):
+def _instruction_failed(instruction):
+    (t, o, st) = instruction
     _mzbench_pipe.write("E {0} {1}.\n".format(t, o))
 
 
