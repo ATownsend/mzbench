@@ -20,13 +20,13 @@ class mac_address:
         return self.convert_int_to_mac(self.number)
 
     def address_without_colon(self):
-        return "{:012x}".format(int(self.number))
+        return "{:012x}".format(self.number)
 
     def __repr__(self):
         return self.convert_int_to_mac(self.number)
 
     def number(self):
-        return int(self.number)
+        return self.number
 
     def increment(self, step = 1):
         self.number += step
