@@ -18,16 +18,14 @@ def initial_state():
 def metrics():
     return [
         [
-            ('Active',  'counter'),
-            ('Failure', 'counter')
+            ('MQTT_Active',  'counter'),
+            ('MQTT_Failure', 'counter')
         ],
-        ('MQTT Connections', 'histogram')
-    ],
-    [
+        ('MQTT_Connections', 'histogram'),
         [
-            ('Success', 'counter'),
-            ('Retry',   'counter'),
-            ('HTTPFail', 'counter')
+            ('HTTP_Success', 'counter'),
+            ('HTTP_Retry',   'counter'),
+            ('HTTP_Fail', 'counter')
         ],
         ('Guardian', 'histogram')
         ]
@@ -42,7 +40,8 @@ def run_baseline(server):
     print(mac.address())
     print(mac.number())
     network = core_network_mock( mac=mac.number(), time=time_stamp, server=server, ssl=True)
-    mzbench.notify(('Active', 'counter'), 1)
+    mzbench.notify(('MQTT_Active', 'counter'), 1)
+    mzbench.notify(('MQTT_Connections','histogram'),1)
     network.core_populate_network(time_stamp, 30, 60)
     #network.core_run_mqtt_status(time_stamp, interval, count_per_report)
     #print(mzbench.get_worker_id())
