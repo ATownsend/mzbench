@@ -122,6 +122,8 @@ class core_network_mock:
         return self.macAddress.address()
 
     def core_populate_network(self, time_stamp, interval, count):
+        interval = int(interval)
+        count = int(count)
         # Create a dummy network model using the given mac prefix string
         network = self.core_create_dummy_network_model(self.macAddress)
         runtime_start = time.time()
