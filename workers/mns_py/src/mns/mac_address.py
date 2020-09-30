@@ -20,7 +20,7 @@ class mac_address:
         return self.convert_int_to_mac(self.number)
 
     def address_without_colon(self):
-        return "{:012x}".format(self.number)
+        return "{:012x}" % (self.number & 0xFF)
 
     def __repr__(self):
         return self.convert_int_to_mac(self.number)
