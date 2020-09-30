@@ -21,8 +21,8 @@ from mns.mac_address import mac_address
 class core_network_mock:
 
     def __init__(self, mac, time, server, url = None, mqtt = None, mqtt_port = 1883, client_id = None, ssl = None, user = None, password = None):
-        self.macAddress = mac_address()
-        self.macAddress.setMac(mac)
+        self.macAddress = mac_address(mac)
+        #self.macAddress.setMac(mac)
         self.time = time
         self.server = server
         self.errors = 0
