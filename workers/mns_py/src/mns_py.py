@@ -18,11 +18,19 @@ def initial_state():
 def metrics():
     return [
         [
-            ('print', 'counter'),
-            ('print_2', 'counter')
+            ('Active',  'counter'),
+            ('Failure', 'counter')
         ],
-        ('dummy', 'histogram')
-    ]
+        ('MQTT Connections', 'histogram')
+    ],
+    [
+        [
+            ('Success', 'counter'),
+            ('Retry',   'counter'),
+            ('HTTPFail', 'counter')
+        ],
+        ('Guardian', 'histogram')
+        ]
 
 
 def run_baseline(server):
@@ -34,10 +42,8 @@ def run_baseline(server):
     print(mac.address())
     print(mac.number())
     network = core_network_mock( mac=mac.number(), time=time_stamp, server=server, ssl=True)
+    mzbench.notify(('Active', 'counter'), 1)
     network.core_populate_network(time_stamp, 30, 60)
-    print("Booya0")
-    print(random_number)
-    print(mac.address())
     #network.core_run_mqtt_status(time_stamp, interval, count_per_report)
     #print(mzbench.get_worker_id())
     #print("Booya1")
@@ -56,7 +62,7 @@ def run_baseline(server):
     #print(os.getusername())
 
 
-    mzbench.notify(('dummy', 'histogram'), random.uniform(0, 1000000000)/7)
+    
 
 
 
