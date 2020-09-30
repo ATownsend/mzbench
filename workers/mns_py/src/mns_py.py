@@ -30,7 +30,7 @@ def run_baseline(server):
     mzbench.notify(('print_2', 'counter'), 2)
     print(sys.version)
     mac=mac_address(random.randint(0, 999999999)*256)
-    time_stamp = time.time() - 31,536,000
+    time_stamp = time.time() - 31536000
     print(mac.address())
     print(mac.number())
     network = core_network_mock( mac=mac.number(), time=time_stamp, server=server, ssl=True)
