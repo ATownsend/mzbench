@@ -242,7 +242,7 @@ class core_network_mock:
         return network
 
     @staticmethod
-    def create_motionmatrix_report(network, time_stamp, interval, count, report_type):
+    def create_motionmatrix_report(network, time_stamp, interval, count, report_type = "motion"):
         # Create a dummy motion matrix report
 
         if report_type == "matrix":
