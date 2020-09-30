@@ -10,6 +10,7 @@ from mns.mac_address import mac_address
 import random
 import math
 import sys
+import threading
 
 def initial_state():
     pass
@@ -39,6 +40,7 @@ def run_baseline(server):
     time_stamp = time.time() - 31536000
     print(mac.address())
     print(mac.number())
+    print(threading.active_count())
     network = core_network_mock( mac=mac.number(), time=time_stamp, server=server, ssl=True)
     mzbench.notify(('MQTT_Active', 'counter'), 1)
     mzbench.notify(('MQTT_Connections','histogram'),1)
