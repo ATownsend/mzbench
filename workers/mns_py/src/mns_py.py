@@ -31,6 +31,9 @@ def run_baseline(server):
     print(sys.version)
     mac=mac_address(random.randint(0, 999999999)*256)
     time_stamp = time.time() - 31,536,000
+    print(random_number)
+    print(mac.address())
+    print(mac.number())
     network = core_network_mock( mac=mac, time=time_stamp, server=server, ssl=True)
     network.core_populate_network(time_stamp, interval, count_per_report)
     print("Booya0")
