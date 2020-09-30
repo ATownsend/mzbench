@@ -8,31 +8,31 @@ class mac_address:
     def setNewMac(self, header = 0, start = 1):
         header = int(str(header), 16)
         start = int(str(start), 16)
-        self.number = int((header * (16 ** 10)) + (start * (16 ** 6)))
+        self._number = int((header * (16 ** 10)) + (start * (16 ** 6)))
     
     def setMac(self, mac):
         if isinstance(mac, str):
-            self.number = self.mac_address_to_number(mac)
+            self._number = self.mac_address_to_number(mac)
         else:
-            self.number = mac
+            self._number = mac
 
     def address(self):
-        return self.convert_int_to_mac(self.number)
+        return self.convert_int_to_mac(self._number)
 
     def address_without_colon(self):
-        return "%012x" % (self.number & 0xFF)
+        return "%012x" % (self._number & 0xFF)
 
     def __repr__(self):
-        return self.convert_int_to_mac(self.number)
+        return self.convert_int_to_mac(self._number)
 
     def number(self):
-        return self.number
+        return self._number
 
     def increment(self, step = 1):
-        self.number += step
+        self._number += step
 
     def offset(self, step):
-        return self.convert_int_to_mac(self.add_to_mac_address(self.number, step))
+        return self.convert_int_to_mac(self.add_to_mac_address(self._number, step))
 
     def increment_mac_section(self, section_to_increment = 1, step = 1):
         ##Increments a section of a mac address (string or number)
@@ -40,7 +40,7 @@ class mac_address:
         ##    6  5  4  3  2  1
         ##   de:e1:48:49:8b:ca
         ##
-        self.number += 1 * 16 ** ((section_to_increment * 2) - 2)
+        self._number += 1 * 16 ** ((section_to_increment * 2) - 2)
 
     @staticmethod
     def add_to_mac_address(mac, step):
