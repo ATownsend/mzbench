@@ -35,12 +35,12 @@ def metrics():
 def run_baseline(server):
     mzbench.notify(('print', 'counter'), 1)
     mzbench.notify(('print_2', 'counter'), 2)
-    print(sys.version)
+    #print(sys.version)
     mac=mac_address(random.randint(0, 999999999)*256)
     time_stamp = time.time() - 31536000
-    print(mac.address())
-    print(mac.number())
-    print(threading.active_count())
+    #print(mac.address())
+    #print(mac.number())
+    #print(threading.active_count())
     network = core_network_mock( mac=mac.number(), time=time_stamp, server=server, ssl=True)
     mzbench.notify(('MQTT_Active', 'counter'), 1)
     mzbench.notify(('MQTT_Connections','histogram'),1)
