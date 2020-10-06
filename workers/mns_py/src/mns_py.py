@@ -6,7 +6,7 @@ import paho.mqtt.client as mqtt
 import os
 import socket
 from common.core_network_mock import CoreNetworkSimple
-from common.mac_address import mac_address
+from common.MacAddress import MacAddress
 import random
 import math
 import sys
@@ -34,7 +34,7 @@ def metrics():
 
 def run_baseline(server):
     #print(sys.version)
-    mac=mac_address(random.randint(0, 999999999)*256)
+    mac=MacAddress(random.randint(0, 999999999)*256)
     time_stamp = time.time() - 31536000
     #print(mac.address())
     #print(mac.number())

@@ -1,4 +1,4 @@
-class mac_address:
+class MacAddress:
     def __init__(self, header = 0, start = 1):
         self.setNewMac(header, start)
 
@@ -45,9 +45,9 @@ class mac_address:
     @staticmethod
     def add_to_mac_address(mac, step):
         if isinstance(step, str):
-            step = mac_address.mac_address_to_number(step)
+            step = MacAddress.mac_address_to_number(step)
         if isinstance(mac, str):
-            return mac_address.convert_int_to_mac(mac_address.mac_address_to_number(mac) + step)
+            return MacAddress.convert_int_to_mac(MacAddress.mac_address_to_number(mac) + step)
         else:
             return (mac + step)
 
