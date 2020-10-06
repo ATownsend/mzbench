@@ -7,7 +7,7 @@ import uuid
 import time
 import sys
 
-from .MqttClient import MqttClient
+from .MqttClient import mqtt_client_simple
 from .MacAddress import MacAddress
 
 class CoreNetworkSimple:
