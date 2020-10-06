@@ -1,0 +1,17 @@
+#!benchDL
+#######
+# Scenario:
+# Register Networks
+# 
+# 
+# 
+# 
+#######
+
+
+make_install(git = "https://github.com/ATownsend/mzbench.git", # worker installation source
+             dir = "workers/mns_py")  # subdir
+             
+pool(size = 10000,
+     worker_type = [mns_py, python],worker_start = linear(60 rps)):
+        run_baseline("backend.load.wifimotion.ca")
