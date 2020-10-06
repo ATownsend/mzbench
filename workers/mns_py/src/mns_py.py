@@ -5,8 +5,8 @@ import time
 import paho.mqtt.client as mqtt
 import os
 import socket
-from mns.core_network_mock import core_network_mock
-from mns.mac_address import mac_address
+from common.core_network_mock import CoreNetworkSimple
+from common.mac_address import mac_address
 import random
 import math
 import sys
@@ -22,7 +22,7 @@ def metrics():
             ('MQTT_Active',  'counter'),
             ('MQTT_Failure', 'counter')
         ],
-        ('MQTT_Connections', 'histogram'),
+        ('MQTT_Connections', 'counter'),
         [
             ('HTTP_Success', 'counter'),
             ('HTTP_Retry',   'counter'),
@@ -39,11 +39,19 @@ def run_baseline(server):
     #print(mac.address())
     #print(mac.number())
     #print(threading.active_count())
-    network = core_network_mock( mac=mac.number(), time=time_stamp, server=server, ssl=True)
+    gk_url = "https://mns." + server + "/gatekeeper"
+    network = CoreNetworkSimple( mac=mac.number(), gk_url=gk_url)
+    network.populate_network()
     mzbench.notify(('HTTP_Success', 'counter'), 1)
-    mzbench.notify(('MQTT_Connections','histogram'),1)
-    network.core_populate_network(time_stamp, 30, 60)
+    mzbench.notify(('MQTT_Connections','counter'),1)
     mzbench.notify(('MQTT_Active', 'counter'), 1)
+
+def run_network(server):
+    print("TODO")
+def run_heartbeat(server):
+    print("TODO")
+def run_motion(server):
+    print("TODO")
     #network.core_run_mqtt_status(time_stamp, interval, count_per_report)
     #print(mzbench.get_worker_id())
     #print("Booya1")
