@@ -34,12 +34,14 @@ def metrics():
         ('Guardian', 'histogram')
         ]
 
+booya = "test1"
 
-def run_baseline(server):
+def run_registration(server):
     #print(sys.version)
     mac=MacAddress(random.randint(0, 999999999)*256)
     time_stamp = time.time() - 31536000
-    #print(mac.address())
+    print(booya)
+    booya = "test2"
     #print(mac.number())
     #print(threading.active_count())
     gk_url = "https://mns." + server + "/gatekeeper"
@@ -51,6 +53,8 @@ def run_baseline(server):
 
 def run_network(server):
     print("TODO")
+    print(booya)
+
 def run_heartbeat(server):
     print("TODO")
 def run_motion(server):
