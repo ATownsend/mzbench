@@ -30,6 +30,8 @@ def metrics():
         ('MQTT_Connections', 'counter'),
         [
             ('HTTP_Success', 'counter'),
+            ('HTTP_master', 'counter'),
+            ('HTTP_peer', 'counter'),
             ('HTTP_Retry',   'counter'),
             ('HTTP_Fail', 'counter')
         ],
@@ -56,10 +58,14 @@ def run_registration(server):
     gk_url = "https://mns." + server + "/gatekeeper"
     network = CoreNetworkSimple( mac=mac.number(), gk_url=gk_url)
     registration = network.populate_network()
-    print(registration)
-    mzbench.notify(('HTTP_Success', 'counter'), 1)
+    for status in registration["results"]:
+        print(status)
+        mzbench.notify(('HTTP_Success', 'counter'), 1)
+
     mzbench.notify(('MQTT_Connections','counter'),1)
     mzbench.notify(('MQTT_Active', 'counter'), 1)
+    mzbench.notify(('MQTT_Packets', 'counter'), 1)
+    mzbench.notify(('MQTT_Status', 'counter'), 1)
 
 def run_network():
     network.send_guardian_status_report()
