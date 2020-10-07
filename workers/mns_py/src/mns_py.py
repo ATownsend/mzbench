@@ -64,11 +64,11 @@ def run_registration(server):
     mzbench.notify(('Guardian', 'histogram'), GK_response_time)
     mzbench.notify(('MQTT', 'histogram'), MQ_response_time)
     for status in registration["results"]:
-        if status == 200
+        if status == 200 :
             mzbench.notify(('HTTP_Success', 'counter'), 1)
-        if status == 201
+        if status == 201 :
             mzbench.notify(('HTTP_Retry', 'counter'), 1)
-    
+
     mzbench.notify(('MQTT_Connections','counter'),1)
     mzbench.notify(('MQTT_Active', 'counter'), 1)
     mzbench.notify(('MQTT_Packets', 'counter'), 1)
