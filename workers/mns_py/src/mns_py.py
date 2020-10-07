@@ -39,13 +39,12 @@ def metrics():
 
 
 def run_registration(server):
+    global mac
+    global network 
+    global gk_url
     #print(sys.version)
     mac=MacAddress(random.randint(0, 999999999)*256)
     time_stamp = time.time() - 31536000
-    global booya 
-    booya = "test1"
-    print(booya)
-    booya = "test2"
     #print(mac.number())
     #print(threading.active_count())
     gk_url = "https://mns." + server + "/gatekeeper"
@@ -55,13 +54,16 @@ def run_registration(server):
     mzbench.notify(('MQTT_Connections','counter'),1)
     mzbench.notify(('MQTT_Active', 'counter'), 1)
 
-def run_network(server):
-    print("TODO")
-    print(booya)
+def run_network():
+    network.send_guardian_status_report()
+    for i in range(1,4):
+        time.sleep(59)
+        network.send_heartbeat()
 
-def run_heartbeat(server):
-    print("TODO")
-def run_motion(server):
+
+def run_heartbeat():
+    network.send_heartbeat()
+def run_motion():
     print("TODO")
     #network.core_run_mqtt_status(time_stamp, interval, count_per_report)
     #print(mzbench.get_worker_id())
