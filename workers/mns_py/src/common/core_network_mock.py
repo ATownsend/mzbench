@@ -175,7 +175,7 @@ class CoreNetworkSimple:
                     raise Exception("Failed to register %s with gatekeeper, after 3 tries." % node)
                 elif root.status_code == 200:
                     node['gk_reply'] = root.json()
-                    results.append(root)
+                    results.append(root.status_code)
                     break
                 else:
                     rand_number = random.randint(10, 30)
