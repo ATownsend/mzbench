@@ -24,11 +24,11 @@ class CoreNetworkSimple:
         self.network = self._core_create_dummy_network_model()
         self.gk_url = gk_url
         
-    def populate_network(self, mqtt_status = True, mqtt_history = True):
+    def populate_network(self, mqtt_status = True, mqtt_history = True, retry = 2):
         runtime_start = time.time()
 
         # Register
-        results = self._gatekeeper_register_network()
+        results = self._gatekeeper_register_network(retry = retry)
         runtime_gatekeeper_registration = time.time()
         self.network_id = self.guardian_mqtt['network_id']
         self.guardian_type = self.guardian_mqtt["mqType"]
@@ -150,13 +150,12 @@ class CoreNetworkSimple:
         }
         return network
 
-    def _gatekeeper_register_network(self):
+    def _gatekeeper_register_network(self, retry = 2):
         # Register a new (or existing) network by publishing radar status
         # reports to gatekeeper.
         # print("Registering network with gatekeeper @ %s..." % gatekeeper_url)
         results = []
         for node in self.network["nodes"]:
-            counter = 2
             if node["role"] not in ["master", "peer"]:
                     continue
 
@@ -170,7 +169,7 @@ class CoreNetworkSimple:
                 
             while True:
                 root = requests.post(self.gk_url, json=payload)
-                if counter == 0:
+                if retry == 0:
                     print(root.__dict__)
                     raise Exception("Failed to register %s with gatekeeper, after 3 tries." % node)
                 elif root.status_code == 200:
@@ -181,7 +180,7 @@ class CoreNetworkSimple:
                     rand_number = random.randint(10, 30)
                     print("Retrying in %i" % rand_number)
                     time.sleep(rand_number)
-                    counter -= 1
+                    retry -= 1
                     
         return results
 
