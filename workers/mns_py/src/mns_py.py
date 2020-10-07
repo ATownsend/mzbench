@@ -42,6 +42,8 @@ def run_registration(server):
     #print(sys.version)
     mac=MacAddress(random.randint(0, 999999999)*256)
     time_stamp = time.time() - 31536000
+    global booya 
+    booya = "test1"
     print(booya)
     booya = "test2"
     #print(mac.number())
