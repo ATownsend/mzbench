@@ -15,6 +15,8 @@ import math
 import sys
 import threading
 
+booya = "test1"
+
 def initial_state():
     pass
 
@@ -34,7 +36,7 @@ def metrics():
         ('Guardian', 'histogram')
         ]
 
-booya = "test1"
+
 
 def run_registration(server):
     #print(sys.version)
