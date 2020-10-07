@@ -33,7 +33,13 @@ def metrics():
             ('HTTP_Retry',   'counter'),
             ('HTTP_Fail', 'counter')
         ],
-        ('Guardian', 'histogram')
+        ('Guardian', 'histogram'),
+        [
+            ('MQTT_Packets',  'counter'),
+            ('MQTT_Heartbeat',  'counter'),
+            ('MQTT_Status',  'counter'),
+            ('MQTT_Motion',  'counter')
+        ]
         ]
 
 
@@ -56,31 +62,24 @@ def run_registration(server):
 
 def run_network():
     network.send_guardian_status_report()
+    mzbench.notify(('MQTT_Packets', 'counter'), 1)
+    mzbench.notify(('MQTT_Status', 'counter'), 1)
     for i in range(1,4):
         time.sleep(59)
         network.send_heartbeat()
+        mzbench.notify(('MQTT_Packets', 'counter'), 1)
+        mzbench.notify(('MQTT_Heartbeat', 'counter'), 1)
 
 
 def run_heartbeat():
     network.send_heartbeat()
+    mzbench.notify(('MQTT_Packets', 'counter'), 1)
+    mzbench.notify(('MQTT_Heartbeat', 'counter'), 1)
+
 def run_motion():
-    print("TODO")
-    #network.core_run_mqtt_status(time_stamp, interval, count_per_report)
-    #print(mzbench.get_worker_id())
-    #print("Booya1")
-    #print(msg)
-    #print("Booya2")
-    #print(os.environ)
-    #print("Booya3")
-    #print(globals())
-    #print("Booya4")
-    #print(locals())
-    #print("Booya5")
-    #print(dir())
-    #print("Booya6")
-    #print(socket.gethostname())
-    #print("Booya7")
-    #print(os.getusername())
+    network.send_motion()
+    mzbench.notify(('MQTT_Packets', 'counter'), 1)
+    mzbench.notify(('MQTT_Motion', 'counter'), 1)
 
 
     
