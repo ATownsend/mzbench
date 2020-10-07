@@ -28,7 +28,7 @@ class CoreNetworkSimple:
         runtime_start = time.time()
 
         # Register
-        self._gatekeeper_register_network()
+        results = self._gatekeeper_register_network()
         runtime_gatekeeper_registration = time.time()
         self.network_id = self.guardian_mqtt['network_id']
         self.guardian_type = self.guardian_mqtt["mqType"]
@@ -52,7 +52,7 @@ class CoreNetworkSimple:
             "gatekeeper": runtime_gatekeeper_registration - runtime_start,
             "mqtt": runtime_end_mqtt - runtime_gatekeeper_registration,
         }
-        return {'runtimes': runtimes}
+        return {'results': results, 'runtimes': runtimes}
             
     def mqtt_publish(self, event, data):
         self.mqtt_connection.publish(self.guardian_type, self.location_id, event, data)

@@ -55,7 +55,8 @@ def run_registration(server):
     #print(threading.active_count())
     gk_url = "https://mns." + server + "/gatekeeper"
     network = CoreNetworkSimple( mac=mac.number(), gk_url=gk_url)
-    network.populate_network()
+    registration = network.populate_network()
+    print(registration)
     mzbench.notify(('HTTP_Success', 'counter'), 1)
     mzbench.notify(('MQTT_Connections','counter'),1)
     mzbench.notify(('MQTT_Active', 'counter'), 1)
