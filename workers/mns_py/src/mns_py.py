@@ -54,6 +54,7 @@ def run_registration(server):
     #print(sys.version)
     mac=MacAddress(random.randint(0, 999999999)*256)
     time_stamp = time.time() - 31536000
+    try_again = True
     #print(mac.number())
     #print(threading.active_count())
     gk_url = "https://mns." + server + "/gatekeeper"
@@ -63,11 +64,17 @@ def run_registration(server):
     MQ_response_time = registration["runtimes"]["mqtt"]
     mzbench.notify(('Guardian', 'histogram'), GK_response_time)
     mzbench.notify(('MQTT', 'histogram'), MQ_response_time)
-    for status in registration["results"]:
-        if status == 200 :
-            mzbench.notify(('HTTP_Success', 'counter'), 1)
-        if status == 201 :
-            mzbench.notify(('HTTP_Retry', 'counter'), 1)
+    while try_again == True:
+        try_again = False
+        for status in registration["results"]:
+            if status == 200 :
+                mzbench.notify(('HTTP_Success', 'counter'), 1)
+            if status == 201 :
+                mzbench.notify(('HTTP_Retry', 'counter'), 1)
+                tryagain = True
+            else:
+                mzbench.notify(('HTTP_Fail', 'counter'), 1)
+                tryagain = True
 
     mzbench.notify(('MQTT_Connections','counter'),1)
     mzbench.notify(('MQTT_Active', 'counter'), 1)
