@@ -57,25 +57,20 @@ def run_registration(server):
     #print(threading.active_count())
     gk_url = "https://mns." + server + "/gatekeeper"
     network = CoreNetworkSimple( mac=mac.number(), gk_url=gk_url)
-    while True:
-        try_again = False
-        registration = network.populate_network()
-        GK_response_time = registration["runtimes"]["gatekeeper"]
-        MQ_response_time = registration["runtimes"]["mqtt"]
-        mzbench.notify(('Guardian', 'histogram'), GK_response_time)
-        mzbench.notify(('MQTT', 'histogram'), MQ_response_time)
+    registration = network.populate_network()
+    GK_response_time = registration["runtimes"]["gatekeeper"]
+    MQ_response_time = registration["runtimes"]["mqtt"]
+    mzbench.notify(('Guardian', 'histogram'), GK_response_time)
+    mzbench.notify(('MQTT', 'histogram'), MQ_response_time)
 
-        for status in registration["results"]:
-            if status == 200 :
-                mzbench.notify(('HTTP_Success', 'counter'), 1)
-            elif status == 201 :
-                mzbench.notify(('HTTP_Retry', 'counter'), 1)
-                try_again = True
-            else:
-                mzbench.notify(('HTTP_Fail', 'counter'), 1)
-                try_again = True
-        if try_again == False:
-            break
+    for status in registration["results"]:
+        if status == 200 :
+            mzbench.notify(('HTTP_Success', 'counter'), 1)
+        elif status == 201 :
+            mzbench.notify(('HTTP_Retry', 'counter'), 1)
+        else:
+            mzbench.notify(('HTTP_Fail', 'counter'), 1)
+
 
     mzbench.notify(('MQTT_Connections','counter'),1)
     mzbench.notify(('MQTT_Active', 'counter'), 1)
