@@ -70,7 +70,8 @@ def run_registration(server):
         for status in registration["results"]:
             if status == 200 :
                 mzbench.notify(('HTTP_Success', 'counter'), 1)
-            if status == 201 :
+                print
+            elif status == 201 :
                 mzbench.notify(('HTTP_Retry', 'counter'), 1)
                 tryagain = True
             else:
