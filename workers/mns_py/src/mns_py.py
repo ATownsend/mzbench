@@ -48,9 +48,7 @@ def metrics():
 
 
 def run_registration(server):
-    global mac
-    global network 
-    global gk_url
+    global network
     #print(sys.version)
     mac=MacAddress(random.randint(0, 999999999)*256)
     time_stamp = time.time() - 31536000
