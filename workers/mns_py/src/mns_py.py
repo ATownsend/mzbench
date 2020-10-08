@@ -72,11 +72,11 @@ def run_registration(server):
                 mzbench.notify(('HTTP_Success', 'counter'), 1)
             elif status == 201 :
                 mzbench.notify(('HTTP_Retry', 'counter'), 1)
-                tryagain = True
+                try_again = True
             else:
                 mzbench.notify(('HTTP_Fail', 'counter'), 1)
-                tryagain = True
-        if tryagain == False:
+                try_again = True
+        if try_again == False:
             break
 
     mzbench.notify(('MQTT_Connections','counter'),1)
