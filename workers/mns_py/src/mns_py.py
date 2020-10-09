@@ -93,7 +93,7 @@ def run_heartbeat():
     mzbench.notify(('MQTT_Packets', 'counter'), 1)
     mzbench.notify(('MQTT_Heartbeat', 'counter'), 1)
 
-def run_guardian_status_report()
+def run_guardian_status_report():
     network.send_guardian_status_report()
     mzbench.notify(('MQTT_Packets', 'counter'), 1)
     mzbench.notify(('MQTT_Status', 'counter'), 1)
