@@ -44,7 +44,7 @@ class MqttClient:
                     print("Failed to publish to MQTT")
                     return False
                     
-        print("MQTT published ",event,"to", self.client_id)
+        #print("MQTT published ",event,"to", self.client_id)
 
     def close(self):
         print("MQTT disconnect in progress", self.client_id)
