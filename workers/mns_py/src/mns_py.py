@@ -72,7 +72,7 @@ def run_registration(server):
             mzbench.notify(('HTTP_Fail', 'counter'), 1)
 
 
-    mzbench.notify(('MQTT_Connections','counter'),1)
+    
     mzbench.notify(('MQTT_Active', 'counter'), 1)
     mzbench.notify(('MQTT_Packets', 'counter'), 1)
     mzbench.notify(('MQTT_Status', 'counter'), 1)
@@ -92,6 +92,11 @@ def run_heartbeat():
     network.send_heartbeat()
     mzbench.notify(('MQTT_Packets', 'counter'), 1)
     mzbench.notify(('MQTT_Heartbeat', 'counter'), 1)
+
+def run_guardian_status_report()
+    network.send_guardian_status_report()
+    mzbench.notify(('MQTT_Packets', 'counter'), 1)
+    mzbench.notify(('MQTT_Status', 'counter'), 1)
 
 def run_motion():
     network.send_motion()
