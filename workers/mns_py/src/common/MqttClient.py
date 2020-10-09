@@ -14,10 +14,12 @@ class MqttClient:
         self.cl = None
         
     def on_connect(self, client, *args):
-        print('MQTT connected', self.client_id, args)
+        t = 1
+        #print('MQTT connected', self.client_id, args)
 
     def on_disconnect(self, client, *args):
-        print('MQTT disconnected', self.client_id, args)
+        t = 1
+        #print('MQTT disconnected', self.client_id, args)
                
     def open(self, server, port, client_id, username, password):
         self.client_id = client_id
