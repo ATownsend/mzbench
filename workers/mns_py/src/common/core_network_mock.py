@@ -23,7 +23,9 @@ class CoreNetworkSimple:
     ):
         if gk_url is None:
            raise Exception('full gk_url must be provided')
-           
+        
+        self.mqtt_on_connect = mqtt_on_connect
+        self.mqtt_on_disconnect = mqtt_on_disconnect
         self.macAddress = MacAddress(mac=mac if mac is not None else random.randint(0, 10000000000))
         self.location_id = "location-id-%s" % (uuid.uuid4())
         self.network = self._core_create_dummy_network_model()
@@ -89,7 +91,6 @@ class CoreNetworkSimple:
         return self.network['nodes'][0]['gk_reply']['local_config']['guardian_mqtt']
     
     def _mqtt_connect(self, username = 'device'):
-        self.client_id = self.location_id
         self.mqtt_connection = mqtt.Client(client_id=self.location_id)
         self.mqtt_connection.username_pw_set(username=username, password=self.guardian_mqtt['mqToken'])
         self.mqtt_connection.connect(self.guardian_mqtt['mqServer'], port=self.guardian_mqtt['mqPort'])
@@ -112,7 +113,7 @@ class CoreNetworkSimple:
                     return False
 
     def _mqtt_disconnect(self):
-        print("MQTT disconnect in progress", self.client_id)
+        print("MQTT disconnect in progress", self.location_id)
         self.mqtt_connection.disconnect()
         gevent.joinall([self.glet])
         delattr(self, "mqtt_connection")
