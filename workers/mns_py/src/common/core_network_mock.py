@@ -52,9 +52,9 @@ class CoreNetworkSimple:
             motionReport = self._create_motionmatrix_report()
             
             if mqtt_status:
-              self.mqtt_publish("guardian-status", guardianReport)
+              self._mqtt_publish("guardian-status", guardianReport)
             if mqtt_history:
-              self.mqtt_publish("motion-matrix", motionReport)
+              self._mqtt_publish("motion-matrix", motionReport)
 
         # Return stats
         runtime_end_mqtt = time.time()
@@ -64,21 +64,18 @@ class CoreNetworkSimple:
             "mqtt": runtime_end_mqtt - runtime_gatekeeper_registration,
         }
         return {'results': results, 'runtimes': runtimes}
-            
-    def mqtt_publish(self, event, data):
-        self.mqtt_connection.publish(self.guardian_type, self.location_id, event, data)
     
     def send_guardian_status_report(self, timestamp = time.time()):
         guardianReport = self._create_guardian_status_report(timestamp)
-        self.mqtt_publish("guardian-status", guardianReport)
+        self._mqtt_publish("guardian-status", guardianReport)
 
     def send_heartbeat(self, timestamp = time.time()):
         guardianReport = self._create_guardian_status_report(timestamp, heartbeat = True)
-        self.mqtt_publish("guardian-status", guardianReport)
+        self._mqtt_publish("guardian-status", guardianReport)
 
     def send_motion(self, timestamp = time.time()):
         motionReport = self._create_motionmatrix_report(timestamp = timestamp)
-        self.mqtt_publish("motion-matrix", motionReport)
+        self._mqtt_publish("motion-matrix", motionReport)
 
     #--- Internal API past this point
     
@@ -98,9 +95,9 @@ class CoreNetworkSimple:
         self.mqtt_connection.on_disconnect = self.mqtt_on_disconnect
         self.glet = gevent.spawn(self.mqtt_connection.loop_forever)
 
-    def publish(self, device_type, device_id, event, data):
+    def _mqtt_publish(self, event, data):
         # Blocking call to send a report to an MQTT client
-        topic = "iot-2/type/%s/id/%s/evt/%s/fmt/json" % (device_type, device_id, event)
+        topic = "iot-2/type/%s/id/%s/evt/%s/fmt/json" % (self.guardian_type, self.location_id, event)
 
         check = 0
         msg_info = self.mqtt_connection.publish(topic, json.dumps(data), qos=1)
