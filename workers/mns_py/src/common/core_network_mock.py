@@ -88,11 +88,11 @@ class CoreNetworkSimple:
     def guardian_mqtt(self):
         return self.network['nodes'][0]['gk_reply']['local_config']['guardian_mqtt']
     
-    def _mqtt_connect(self, server=self.guardian_mqtt['mqServer'], port=self.guardian_mqtt['mqPort'], client_id = self.location_id, username = 'device', password = self.guardian_mqtt['mqToken']):
+    def _mqtt_connect(self, username = 'device'):
         self.client_id = client_id
-        self.mqtt_connection = mqtt.Client(client_id=client_id)
-        self.mqtt_connection.username_pw_set(username=username, password=password)
-        self.mqtt_connection.connect(server, port=port)
+        self.mqtt_connection = mqtt.Client(client_id=self.location_id)
+        self.mqtt_connection.username_pw_set(username=username, password=self.guardian_mqtt['mqToken'])
+        self.mqtt_connection.connect(self.guardian_mqtt['mqServer'], port=self.guardian_mqtt['mqPort'])
         self.mqtt_connection.on_connect = self.mqtt_on_disconnect
         self.mqtt_connection.on_disconnect = self.mqtt_on_disconnect
         self.glet = gevent.spawn(self.mqtt_connection.loop_forever)
