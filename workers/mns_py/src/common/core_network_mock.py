@@ -18,8 +18,8 @@ class CoreNetworkSimple:
         self,
         mac=None,
         gk_url=None, 
-        mqtt_on_connect=nothing(),
-        mqtt_on_disconnect=nothing()
+        mqtt_on_connect=lambda *args: None,
+        mqtt_on_disconnect=lambda *args: None
     ):
         if gk_url is None:
            raise Exception('full gk_url must be provided')
