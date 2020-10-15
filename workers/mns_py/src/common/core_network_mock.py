@@ -18,8 +18,8 @@ class CoreNetworkSimple:
         self,
         mac=None,
         gk_url=None, 
-        mqtt_on_connect=self.nothing(),
-        mqtt_on_disconnect=self.nothing()
+        mqtt_on_connect=nothing(),
+        mqtt_on_disconnect=nothing()
     ):
         if gk_url is None:
            raise Exception('full gk_url must be provided')
@@ -28,7 +28,8 @@ class CoreNetworkSimple:
         self.location_id = "location-id-%s" % (uuid.uuid4())
         self.network = self._core_create_dummy_network_model()
         self.gk_url = gk_url
-    
+
+    @staticmethod
     def nothing():
         return True
 
