@@ -6,15 +6,20 @@ import random
 import uuid
 import time
 import sys
+import json
+import paho.mqtt.client as mqtt
+import gevent
 
-from .MqttClient import MqttClient
+#from .MqttClient import MqttClient
 from .MacAddress import MacAddress
 
 class CoreNetworkSimple:
     def __init__(
         self,
         mac=None,
-        gk_url=None
+        gk_url=None, 
+        mqtt_on_connect=self.nothing(),
+        mqtt_on_disconnect=self.nothing()
     ):
         if gk_url is None:
            raise Exception('full gk_url must be provided')
@@ -23,7 +28,10 @@ class CoreNetworkSimple:
         self.location_id = "location-id-%s" % (uuid.uuid4())
         self.network = self._core_create_dummy_network_model()
         self.gk_url = gk_url
-        
+    
+    def nothing():
+        return True
+
     def populate_network(self, mqtt_status = True, mqtt_history = True, retry = 2):
         runtime_start = time.time()
 
@@ -79,15 +87,33 @@ class CoreNetworkSimple:
     def guardian_mqtt(self):
         return self.network['nodes'][0]['gk_reply']['local_config']['guardian_mqtt']
     
-    def _mqtt_connect(self):
-        conninfo = self.guardian_mqtt
-        self.mqtt_connection = MqttClient()
-        self.mqtt_connection.open(
-            conninfo['mqServer'], conninfo['mqPort'], self.location_id, 'device', conninfo['mqToken']
-        )
+    def _mqtt_connect(self, server=self.guardian_mqtt['mqServer'], port=self.guardian_mqtt['mqPort'], client_id = self.location_id, username = 'device', password = self.guardian_mqtt['mqToken']):
+        self.client_id = client_id
+        self.mqtt_connection = mqtt.Client(client_id=client_id)
+        self.mqtt_connection.username_pw_set(username=username, password=password)
+        self.mqtt_connection.connect(server, port=port)
+        self.mqtt_connection.on_connect = self.mqtt_on_disconnect
+        self.mqtt_connection.on_disconnect = self.mqtt_on_disconnect
+        self.glet = gevent.spawn(self.mqtt_connection.loop_forever)
+
+    def publish(self, device_type, device_id, event, data):
+        # Blocking call to send a report to an MQTT client
+        topic = "iot-2/type/%s/id/%s/evt/%s/fmt/json" % (device_type, device_id, event)
+
+        check = 0
+        msg_info = self.mqtt_connection.publish(topic, json.dumps(data), qos=1)
+        if not msg_info.is_published():
+            while not msg_info.is_published():
+                gevent.sleep(0.1)
+                check += 1
+                if check > 300:
+                    print("Failed to publish to MQTT")
+                    return False
 
     def _mqtt_disconnect(self):
-        self.mqtt_connection.close()
+        print("MQTT disconnect in progress", self.client_id)
+        self.mqtt_connection.disconnect()
+        gevent.joinall([self.glet])
         delattr(self, "mqtt_connection")
 
     def _core_create_dummy_network_model(self):

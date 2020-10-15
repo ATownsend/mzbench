@@ -15,8 +15,6 @@ import math
 import sys
 import threading
 
-booya = "test1"
-
 def initial_state():
     pass
 
