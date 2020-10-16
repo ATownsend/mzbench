@@ -86,10 +86,12 @@ def run_network():
         mzbench.notify(('MQTT_Heartbeat', 'counter'), 1)
 
 def _notify_connect():
+    print("booya")
     mzbench.notify(('MQTT_Active', 'counter'), 1)
     mzbench.notify(('MQTT_Connections', 'counter'), 1)
 
 def _notify_disconnect():
+    print("no booya")
     mzbench.notify(('MQTT_Active', 'counter'), -1)
     mzbench.notify(('MQTT_Connections', 'counter'), -1)
 
