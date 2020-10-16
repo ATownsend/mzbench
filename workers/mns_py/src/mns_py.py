@@ -54,7 +54,7 @@ def run_registration(server):
     #print(mac.number())
     #print(threading.active_count())
     gk_url = "https://mns." + server + "/gatekeeper"
-    network = CoreNetworkSimple( mac=mac.number(), gk_url=gk_url)
+    network = CoreNetworkSimple( mac=mac.number(), gk_url=gk_url, mqtt_on_connect=_notify_connect, mqtt_on_disconnect=_notify_disconnect)
     registration = network.populate_network()
     GK_response_time = registration["runtimes"]["gatekeeper"]
     MQ_response_time = registration["runtimes"]["mqtt"]
@@ -71,7 +71,7 @@ def run_registration(server):
 
 
     
-    mzbench.notify(('MQTT_Active', 'counter'), 1)
+    
     mzbench.notify(('MQTT_Packets', 'counter'), 1)
     mzbench.notify(('MQTT_Status', 'counter'), 1)
 
@@ -85,6 +85,13 @@ def run_network():
         mzbench.notify(('MQTT_Packets', 'counter'), 1)
         mzbench.notify(('MQTT_Heartbeat', 'counter'), 1)
 
+def _notify_connect():
+    mzbench.notify(('MQTT_Active', 'counter'), 1)
+    mzbench.notify(('MQTT_Connections', 'counter'), 1)
+
+def _notify_disconnect():
+    mzbench.notify(('MQTT_Active', 'counter'), -1)
+    mzbench.notify(('MQTT_Connections', 'counter'), -1)
 
 def run_heartbeat():
     network.send_heartbeat()
